@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Product {
+private:
+    string name;
+    double price;
+    static double discountRate; // Static discount rate for all products
+
+public:
+    // Constructor
+    Product(string n, double p) : name(n), price(p) {}
+
+    // Static method to set discount rate
+    static void setDiscountRate(double rate) {
+        discountRate = rate;
+    }
+
+    // Method to calculate final price after applying discount
+    double calculateFinalPrice() const {
+        return price * (1 - discountRate / 100);
+    }
+
+    // Method to display product details
+    void display() const {
+        cout << "Product: " << name << "\n"
+             << "Original Price: $" << price << "\n"
+             << "Discount Rate: " << discountRate << "%\n"
+             << "Final Price: $" << calculateFinalPrice() << "\n\n";
+    }
+};
+
+// Initialize the static member
+double Product::discountRate = 0.0;
+
+int main() {
+    // Create Product objects
+    Product p1("Laptop", 1000);
+    Product p2("Smartphone", 500);
+
+    // Display initial prices
+    p1.display();
+    p2.display();
+
+    // Apply discount globally
+    Product::setDiscountRate(10);
+
+    // Display updated prices
+    cout << "After applying 10% discount:\n";
+    p1.display();
+    p2.display();
+
+    return 0;
+}
